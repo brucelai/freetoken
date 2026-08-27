@@ -150,6 +150,11 @@ def parse_args(
         if (
             "qwen3_5" in marker
             or "qwen3.5" in marker
+            or "qwen3_8" in marker
+            or "qwen3.8" in marker
+            or ("qwen3" in marker and "flash-next" in marker)
+            or ("qwen3" in marker and "flash_next" in marker)
+            or ("qwen3" in marker and "flashnext" in marker)
             or ("qwen3" in marker and "coder" in marker)
         ):
             return "qwen3_coder"

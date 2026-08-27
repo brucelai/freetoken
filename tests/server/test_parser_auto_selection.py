@@ -87,6 +87,14 @@ def test_qwen3_5_is_not_shadowed_by_the_generic_qwen_branch():
     assert _inferred("Qwen3MoeForCausalLM")[0] == "qwen25"
 
 
+def test_qwen3_8_flash_next_uses_qwen3_coder_parser():
+    config = _Config({"architectures": ["Qwen2ForCausalLM"], "torch_dtype": "bfloat16"})
+    with patch("freetoken.utils.cached_load_hf_config", lambda _path: config):
+        args, _ = parse_args(["--model", "/models/Qwen3.8-Flash-Next"])
+    assert args.tool_call_parser == "qwen3_coder"
+    assert args.reasoning_parser == "qwen3"
+
+
 def test_an_explicit_choice_beats_inference():
     config = _Config({"architectures": ["DeepseekV4ForCausalLM"], "torch_dtype": "bfloat16"})
     with patch("freetoken.utils.cached_load_hf_config", lambda _path: config):
